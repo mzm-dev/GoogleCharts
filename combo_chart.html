@@ -1,0 +1,67 @@
+<html>
+  <head>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1.0', {'packages':['corechart']});
+	  
+      function drawSheetName(val) {	  		  	
+      var queryString = encodeURIComponent("SELECT A, "+val);
+
+      var query = new google.visualization.Query(
+          'https://docs.google.com/spreadsheets/d/1J7J58i5g_7Q17G2Z-KpJLkJNrLZlYdiQfeZ37ioPHO8/gviz/tq?sheet=maklumat_ternakan_bebiri2&headers=1&tq=' + queryString
+      );
+          query.send(handleSampleDataQueryResponse);
+      }
+        
+        function handleSampleDataQueryResponse(response) {
+            if (response.isError()) {
+                alert('Error in query: ' + response.getMessage() + ' ' + response.getDetailedMessage());
+                return;
+            }
+            
+            var data = response.getDataTable();
+            console.log(data);
+            var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+            var options = {
+                width: '100%',
+                height: 400,
+                legend: 'bottom',				
+                seriesType: 'bars',
+                series: {
+                    0:{type: "bars", targetAxisIndex: 0},
+                    1:{type: "line", targetAxisIndex: 1, pointSize:5},
+                },
+                vAxes: { 0: {title: 'Kuantiti (Ekor/Tan Matrik)'}, 1: {title: 'Nilai (RM Juta)'} }
+              };
+            chart.draw(data, options);
+        }
+      </script>
+    </head>
+    <body>
+        <body>			
+		 <select id="jenis">
+			<option>Select</option>
+			<option value="B, C">Import Bebiri Hidup</option>
+						
+			<option value="D, E">Export Bebiri Hidup</option>
+			
+			<option value="F, G">Import Bebiri Daging</option>			
+			
+			<option value="H, I">Export Bebiri Daging</option>			
+					
+		</select>
+        <div id="chart_div"></div>
+    </body>
+	
+	<script>
+		$(document).ready(function(){
+			$("#jenis").on('change', function(){
+				var value = $('#jenis :selected').val();
+				 google.setOnLoadCallback(drawSheetName(value));
+			});
+		});    
+	</script>
+    </body>
+</html>
