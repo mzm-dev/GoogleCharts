@@ -10,7 +10,7 @@
       var queryString = encodeURIComponent("SELECT A, "+val);
 
       var query = new google.visualization.Query(
-          'https://docs.google.com/spreadsheets/d/1J7J58i5g_7Q17G2Z-KpJLkJNrLZlYdiQfeZ37ioPHO8/gviz/tq?sheet=maklumat_ternakan_bebiri&headers=1&tq=' + queryString
+          'https://docs.google.com/spreadsheets/d/1J7J58i5g_7Q17G2Z-KpJLkJNrLZlYdiQfeZ37ioPHO8/gviz/tq?sheet=populasi_ternakan_bebiri&headers=1&tq=' + queryString
       );
           query.send(handleSampleDataQueryResponse);
       }
@@ -32,7 +32,7 @@
                 seriesType: 'bars',                
                 series: {
                     0:{type: "bars", targetAxisIndex: 0},
-                    1:{type: "line", targetAxisIndex: 1, pointSize:5},
+                    //1:{type: "line", targetAxisIndex: 1, pointSize:5},
                 },
                 vAxes: { 0: {title: 'Kuantiti (Ekor/Tan Matrik)'}, 1: {title: 'Nilai (RM Juta)'} }
               };
@@ -43,32 +43,34 @@
     <body>
         <body>			
 		 <select id="jenis">
-			<option>Select</option>
-			<option value="B, C" data-title="Import Bebiri Hidup">
-                Import Bebiri Hidup</option>						
-			<option value="D, E" data-title="Export Bebiri Hidup">
-                Export Bebiri Hidup</option>			
-			<option value="F, G" data-title="Import Bebiri Daging">
-                Import Bebiri Daging</option>						
-			<option value="H, I" data-title="Export Bebiri Daging">
-                Export Bebiri Daging</option>			             
-             <option value="J, K" data-title="Pengeluran Daging Bebiri Tempatan">
-                 Pengeluran Daging Bebiri Tempatan</option>			             
-             <option value="M" data-title="Populasi Bebiri">Populasi Bebiri</option>			
-					
-		</select>
+            <option>--Pilhan--</option>
+            <option value="B" data-title="Johor">Johor</option>
+            <option value="C" data-title="Kedah">Kedah</option>
+            <option value="D" data-title="Kelantan">Kelantan</option>
+            <option value="E" data-title="Melaka">Melaka</option>
+            <option value="F" data-title="Negeri Sembilan">Negeri Sembilan</option>
+            <option value="G" data-title="Pahang">Pahang</option>
+            <option value="H" data-title="Pulau Pinang">Pulau Pinang</option>
+            <option value="I" data-title="Perak">Perak</option>
+            <option value="J" data-title="Perlis">Perlis</option>
+            <option value="K" data-title="Selangor">Selangor</option>
+            <option value="L" data-title="Terengganu">Terengganu</option>
+            <option value="M" data-title="Sabah">Sabah</option>
+            <option value="N" data-title="Sarawak">Sarawak</option>  
+            <option value="Q" data-title="Seluruh Malaysia">Seluruh Malaysia</option>
+        </select>
         <h3 id="chart-title" style="text-align:center"></h3>
         <div id="chart_div"></div>
     </body>
 	
 	<script>
 		$(document).ready(function(){
-            $("#chart-title").hide();
+            $("#chart-title").hide();            
 			$("#jenis").on('change', function(){
 				var value = $('#jenis :selected').val();
                 var subtitile = $('#jenis :selected').data('title');            
-                $("#chart-title").show().text("Maklumat Ternakan Bebiri, 2009 - 2014 : " + subtitile);
-				 google.setOnLoadCallback(drawSheetName(value, subtitile));
+                $("#chart-title").show().text("Populasi Ternakan Bebiri, 2009 - 2014 : " + subtitile);
+				 google.setOnLoadCallback(drawSheetName(value));
 			});
 		});    
 	</script>
